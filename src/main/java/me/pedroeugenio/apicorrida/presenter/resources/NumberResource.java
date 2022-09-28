@@ -23,7 +23,7 @@ public class NumberResource {
         this.numberService = numberService;
     }
 
-    @Operation(summary = "Buscar ocorrencias de numeros através por an em vetor")
+    @Operation(summary = "Buscar ocorrencias de numeros nos valores de uma matriz")
     @GetMapping("/{vetor}")
     public ResponseEntity<List<NumberDto>> getNumbers(@PathVariable Integer[] vetor) {
         return ResponseEntity.ok(numberService.searchOccurrences(vetor));
