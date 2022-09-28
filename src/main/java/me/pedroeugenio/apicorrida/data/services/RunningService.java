@@ -68,7 +68,10 @@ public class RunningService {
      * @return the winner
      */
     public RunningLogDto getWinner() {
-        return lastLaps().get(0);
+        if(!lastLaps().isEmpty())
+            return lastLaps().get(0);
+        else
+            throw new IllegalArgumentException("Lista de ultimas voltas vazia");
     }
 
     /**
