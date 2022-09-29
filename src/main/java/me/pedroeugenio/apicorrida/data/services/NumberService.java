@@ -3,12 +3,13 @@ package me.pedroeugenio.apicorrida.data.services;
 import me.pedroeugenio.apicorrida.data.mappers.NumberMapper;
 import me.pedroeugenio.apicorrida.data.repositories.NumberRepository;
 import me.pedroeugenio.apicorrida.presenter.dto.NumberDto;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * The type Number service.
@@ -38,25 +39,12 @@ public class NumberService {
      * @return The list of occurrences for each value of the passed vector
      */
     public List<NumberDto> searchOccurrences(Integer[] an) {
-        Map<Integer, Integer> map = new HashMap<>();
         int[][] matriz = numberRepository.GetBiArray();
-
-        for (int[] m : matriz) {
-            for (int n : m) {
-                for (int i : an) {
-                    if (i == n) {
-                        if (map.containsKey(i)) {
-                            map.put(i, map.get(i) + 1);
-                        } else {
-                            map.put(i, 1);
-                        }
-                    } else if (!map.containsKey(i)) {
-                        map.put(i, 0);
-                    }
-                }
-            }
-        }
-        return numberMapper.mapNumbers(map);
+        List<ImmutablePair<Integer, Integer>> collect = Arrays.stream(an)
+                .map(e -> { int optionalInteger = Arrays.stream(matriz).mapToInt(v -> (int) Arrays.stream(v)
+                    .filter(b -> b == e).count()).sum();
+            return new ImmutablePair<>(e, optionalInteger);
+        }).collect(Collectors.toList());
+        return numberMapper.mapNumbers(collect);
     }
-
 }

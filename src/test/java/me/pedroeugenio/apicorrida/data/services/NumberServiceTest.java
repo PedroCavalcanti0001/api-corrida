@@ -9,10 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -37,7 +34,7 @@ class NumberServiceTest {
         // Setup
         final List<NumberDto> expectedResult = Arrays.asList(new NumberDto(0, 1));
         when(numberRepository.GetBiArray()).thenReturn(new int[][]{{0}});
-        when(numberMapper.mapNumbers(new HashMap<>())).thenReturn(Arrays.asList(new NumberDto(0, 1)));
+        when(numberMapper.mapNumbers(new ArrayList<>())).thenReturn(Arrays.asList(new NumberDto(0, 1)));
 
         // Run the test
         final List<NumberDto> result = numberServiceUnderTest.searchOccurrences(new Integer[]{});
@@ -50,7 +47,7 @@ class NumberServiceTest {
     void testSearchOccurrences_NumberRepositoryReturnsNoItems() {
         // Setup
         when(numberRepository.GetBiArray()).thenReturn(new int[][]{});
-        when(numberMapper.mapNumbers(new HashMap<>())).thenReturn(Collections.emptyList());
+        when(numberMapper.mapNumbers(new ArrayList<>())).thenReturn(Collections.emptyList());
 
         // Run the test
         final List<NumberDto> result = numberServiceUnderTest.searchOccurrences(new Integer[]{});
@@ -63,10 +60,10 @@ class NumberServiceTest {
     void testSearchOccurrences_NumberMapperReturnsNoItems() {
         // Setup
         when(numberRepository.GetBiArray()).thenReturn(new int[][]{});
-        when(numberMapper.mapNumbers(new HashMap<>())).thenReturn(Collections.emptyList());
+        when(numberMapper.mapNumbers(new ArrayList<>())).thenReturn(Collections.emptyList());
 
         // Run the test
-        final List<NumberDto> result = numberServiceUnderTest.searchOccurrences(new Integer[]{0});
+        final List<NumberDto> result = numberServiceUnderTest.searchOccurrences(new Integer[]{});
 
         // Verify the results
         assertThat(result).isEqualTo(Collections.emptyList());

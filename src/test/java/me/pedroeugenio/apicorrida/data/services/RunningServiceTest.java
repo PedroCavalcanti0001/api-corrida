@@ -143,7 +143,7 @@ class RunningServiceTest {
 
         // Run the test
         final RunningLogDto result = runningServiceUnderTest.getWinner();
-        System.out.println(result);
+
         // Verify the results
         assertThat(result).isEqualTo(expectedResult);
     }
