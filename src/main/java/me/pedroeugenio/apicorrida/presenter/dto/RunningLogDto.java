@@ -20,6 +20,11 @@ public class RunningLogDto {
     private Float averageSpeedBack;
 
 
+    /**
+     * the lapTime displayed when serializing the object is in seconds
+     *
+     * @return the lap time in seconds
+     */
     @JsonProperty("lapTime")
     public long getLapTime() {
         return lapTime.getSeconds();
